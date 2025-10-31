@@ -1,0 +1,137 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Dashboard - IAM{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-speedometer2"></i> Dashboard</h1>
+    <span class="badge bg-primary">Welcome, {{ user.display_name or user.username }}!</span>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Active Sessions</h6>
+                        <h3>1</h3>
+                    </div>
+                    <i class="bi bi-person-check fs-1 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Total Users</h6>
+                        <h3>-</h3>
+                    </div>
+                    <i class="bi bi-people fs-1 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">Roles</h6>
+                        <h3>-</h3>
+                    </div>
+                    <i class="bi bi-person-badge fs-1 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-title">MFA Enabled</h6>
+                        <h3>-</h3>
+                    </div>
+                    <i class="bi bi-shield-check fs-1 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-person-circle"></i> User Information</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tr>
+                        <th>Username:</th>
+                        <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Display Name:</th>
+                        <td>{{ user.display_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Auth Provider:</th>
+                        <td><span class="badge bg-secondary">{{ user.auth_provider }}</span></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tr>
+                        <th>Roles:</th>
+                        <td>
+                            {% if user.roles %}
+                                {% for role in user.roles %}
+                                    <span class="badge bg-primary me-1">{{ role.role_name }}</span>
+                                {% endfor %}
+                            {% else %}
+                                <span class="text-muted">No roles assigned</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Status:</th>
+                        <td>
+                            {% if user.is_active and not user.is_locked %}
+                                <span class="badge bg-success">Active</span>
+                            {% elif user.is_locked %}
+                                <span class="badge bg-danger">Locked</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Inactive</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Last Login:</th>
+                        <td>{{ user.last_login_at.strftime('%Y-%m-%d %H:%M:%S') if user.last_login_at else 'Never' }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4 alert alert-info">
+    <i class="bi bi-info-circle"></i> 
+    <strong>Welcome to IAM!</strong> This is a placeholder dashboard. 
+    User management, role administration, and MFA features will be available soon.
+</div>
+{% endblock %}
+

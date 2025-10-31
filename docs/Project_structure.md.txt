@@ -1,0 +1,23 @@
+your-project/
+  app/
+    __init__.py
+    config.py
+    extensions.py
+
+    auth/
+      models.py
+      routes_login.py
+      routes_admin.py
+      security.py
+      services_mfa.py
+      services_sso.py
+      templates/
+        login.html
+        mfa_verify.html
+        admin_users.html
+
+  migrations/         <-- will be created by Flask-Migrate
+  db/
+    iam_schema.sql
+  manage.py           <-- optional helper entrypoint
+  .env
